@@ -388,12 +388,18 @@ public class Imagem {
         BufferedImage img1 = new BufferedImage(img.getWidth(),
                 img.getHeight(), 1);
         img = grayscaleMedia(img);
-        int media = 0;
+        int media;
         for(int x = 1; x < img.getWidth() - 1; x++){
             for(int y = 1; y < img.getHeight() - 1; y++){
-                media = (retornaValorPixel(img, x - 1, y - 1) + retornaValorPixel(img, x - 1, y)+ retornaValorPixel(img, x - 1, y + 1) 
-                        + retornaValorPixel(img, x, y - 1) + retornaValorPixel(img, x, y) + retornaValorPixel(img, x, y + 1) 
-                        + retornaValorPixel(img, x + 1, y - 1) + retornaValorPixel(img, x + 1, y) + retornaValorPixel(img, x + 1, y + 1)) / 9;
+                media = (retornaValorPixel(img, x - 1, y - 1) 
+                        + retornaValorPixel(img, x - 1, y) 
+                        + retornaValorPixel(img, x - 1, y + 1) 
+                        + retornaValorPixel(img, x, y - 1) 
+                        + retornaValorPixel(img, x, y) 
+                        + retornaValorPixel(img, x, y + 1) 
+                        + retornaValorPixel(img, x + 1, y - 1) 
+                        + retornaValorPixel(img, x + 1, y) 
+                        + retornaValorPixel(img, x + 1, y + 1)) / 9;
                 Color cor = new Color(media, media, media);
                 img1.setRGB(x, y, cor.getRGB());
             }
