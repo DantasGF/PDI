@@ -379,4 +379,25 @@ public class Imagem {
         img1 = yiq2Rgb(rgb, img);
         return img1;
     }
+    
+    public int retornaValorPixel(BufferedImage img, int x, int y){
+        return new Color(img.getRGB(x, y)).getRed();
+    }
+    
+    public BufferedImage mediaSuavizacao(BufferedImage img){
+        BufferedImage img1 = new BufferedImage(img.getWidth(),
+                img.getHeight(), 1);
+        img = grayscaleMedia(img);
+        int media = 0;
+        for(int x = 1; x < img.getWidth() - 1; x++){
+            for(int y = 1; y < img.getHeight() - 1; y++){
+                media = (retornaValorPixel(img, x - 1, y - 1) + retornaValorPixel(img, x - 1, y)+ retornaValorPixel(img, x - 1, y + 1) 
+                        + retornaValorPixel(img, x, y - 1) + retornaValorPixel(img, x, y) + retornaValorPixel(img, x, y + 1) 
+                        + retornaValorPixel(img, x + 1, y - 1) + retornaValorPixel(img, x + 1, y) + retornaValorPixel(img, x + 1, y + 1)) / 9;
+                Color cor = new Color(media, media, media);
+                img1.setRGB(x, y, cor.getRGB());
+            }
+        }
+        return img1;
+    }
 }

@@ -61,6 +61,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
         limiar = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
 
@@ -232,6 +234,18 @@ public class Principal extends javax.swing.JFrame {
         jMenu6.add(jMenuItem7);
 
         jMenu1.add(jMenu6);
+
+        jMenu7.setText("Operações Locais");
+
+        jMenuItem8.setText("Filtro Média 3x3");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem8);
+
+        jMenu1.add(jMenu7);
 
         limiar.setText("Limiar");
         limiar.addActionListener(new java.awt.event.ActionListener() {
@@ -408,6 +422,11 @@ public class Principal extends javax.swing.JFrame {
         exibirImagem(buffer, img);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        BufferedImage buffer = new Imagem().mediaSuavizacao(img);
+        exibirImagem(buffer, img);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
     private void exibirImagem(){
         img = new Imagem().abrirImagem(img);
         
@@ -475,6 +494,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -483,6 +503,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem limiar;
     private javax.swing.JMenuItem limpar;
     private javax.swing.JMenuItem salvar;
