@@ -423,10 +423,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        String quantidadeSuavizacao = 
-                JOptionPane.showInputDialog("Informe a quantidade de suavização");
-        BufferedImage buffer = new Imagem().mediaSuavizacao(img,
-                Integer.parseInt(quantidadeSuavizacao));
+        BufferedImage buffer = new Imagem().mediaSuavizacao(img);
         exibirImagem(buffer, img);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
