@@ -237,7 +237,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu7.setText("Operações Locais");
 
-        jMenuItem8.setText("Filtro Média 3x3");
+        jMenuItem8.setText("Filtro Média");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem8ActionPerformed(evt);
@@ -423,7 +423,10 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        BufferedImage buffer = new Imagem().mediaSuavizacao(img);
+        String tamJanela = 
+                JOptionPane.showInputDialog("Informe o tamanho da janela");
+        BufferedImage buffer = new Imagem().mediaSuavizacao(img,
+                Integer.parseInt(tamJanela));
         exibirImagem(buffer, img);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 

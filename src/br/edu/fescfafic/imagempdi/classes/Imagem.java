@@ -380,19 +380,20 @@ public class Imagem {
         return img1;
     }
     
-    public BufferedImage mediaSuavizacao(BufferedImage img){
+    public BufferedImage mediaSuavizacao(BufferedImage img, int tamJanela){
         BufferedImage img1 = new BufferedImage(img.getWidth(),
                 img.getHeight(), 1);
         img = grayscaleMedia(img);
-        int media = 0;
-        for(int x = 1; x < img.getWidth() - 1; x++){
-            for(int y = 1; y < img.getHeight() - 1; y++){
-                for(int x1 = x - 1; x1 <= x + 1; x1++){
-                    for(int y1 = y - 1; y1 <= y + 1; y1++){
-                        media += new Color(img.getRGB(x1, y1)).getRed();
+        int area = (tamJanela / 2);
+        for(int x = area; x < img.getWidth() - area; x++){
+            for(int y = area; y < img.getHeight() - area; y++){
+                int media = 0;
+                for(int x1 = x - area; x1 <= x + area; x1++){
+                    for(int y1 = y - area; y1 <= y + area; y1++){
+                        media += new Color((img.getRGB(x1, y1))).getRed();
                     }
                 }
-                media = media / 9;
+                media = (int) (media / (Math.pow(tamJanela, 2)));
                 Color cor = new Color(media, media, media);
                 img1.setRGB(x, y, cor.getRGB());
             }
