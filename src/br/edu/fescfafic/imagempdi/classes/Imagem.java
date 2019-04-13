@@ -380,7 +380,7 @@ public class Imagem {
         return img1;
     }
     
-    public BufferedImage mediaSuavizacao(BufferedImage img){
+    public BufferedImage mediaSuavizacao(BufferedImage img, int valorSuavizacao){
         BufferedImage img1 = new BufferedImage(img.getWidth(),
                 img.getHeight(), 1);
         img = grayscaleMedia(img);

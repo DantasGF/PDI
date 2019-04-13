@@ -26,7 +26,7 @@ public class TestaSuavizacao {
         try {
             BufferedImage img = ImageIO.read(new File("/home/gutemberg/Área de Trabalho/gato.jpg"));
             Imagem i = new Imagem();
-            img = i.mediaSuavizacao(img);
+            img = i.mediaSuavizacao(img, 3);
             ImageIO.write(img, "jpg", new File("/home/gutemberg/Área de Trabalho/teste.jpg"));
         } catch (IOException ex) {
             System.err.println("Erro: " + ex);
