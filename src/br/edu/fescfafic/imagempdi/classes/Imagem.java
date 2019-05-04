@@ -6,9 +6,12 @@
 package br.edu.fescfafic.imagempdi.classes;
 
 import java.awt.Color;
+import java.awt.List;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -398,6 +401,70 @@ public class Imagem {
                 img1.setRGB(x, y, cor.getRGB());
             }
         }
+        return img1;
+    }
+    
+    public BufferedImage medianaSuavizacao(BufferedImage img, int tamJanela){
+        BufferedImage img1 = new BufferedImage(img.getWidth(),
+                img.getHeight(), 1);
+        
+        int[] pixels = new int[tamJanela * tamJanela];
+        
+        img = grayscaleMedia(img);
+        int area = (tamJanela / 2);
+        
+        for(int x = area; x < img.getWidth() - area; x++){
+            for(int y = area; y < img.getHeight() - area; y++){
+                
+                int i = 0;
+                
+                for(int x1 = x - area; x1 <= x + area; x1++){
+                    for(int y1 = y - area; y1 <= y + area; y1++){
+                        int cor = new Color(img.getRGB(x1, y1)).getRed();
+                        if(i < pixels.length){
+                            pixels[i] = cor;
+                            i++;
+                        }
+                    }
+                }
+                Arrays.sort(pixels);
+                int mediana = (int) pixels[(tamJanela * tamJanela) / 2];
+                Color cor = new Color(mediana, mediana, mediana);
+                img1.setRGB(x, y, cor.getRGB());
+            }
+        }
+        return img1;
+    }
+    
+    public BufferedImage modaSuavizacao(BufferedImage img, int tamJanela){
+        BufferedImage img1 = new BufferedImage(img.getWidth(),
+                img.getHeight(), 1);
+        img = grayscaleMedia(img);
+        int area = (tamJanela / 2);
+        
+        int[] pixels = new int[tamJanela * tamJanela];
+        
+        
+        for(int x = area; x < img.getWidth() - area; x++){
+            for(int y = area; y < img.getHeight() - area; y++){
+                int i = 0;
+                for(int x1 = x - area; x1 <= x + area; x1++){
+                    for(int y1 = y - area; y1 <= y + area; y1++){
+                        int moda = 0;
+                        if(i < pixels.length){
+                            pixels[i] = new Color(img.getRGB(x1, y1)).getRed();
+                            i++;
+                            
+                        }
+                    }
+                }
+//                media = (int) (media / (Math.pow(tamJanela, 2)));
+//                Color cor = new Color(media, media, media);
+//                img1.setRGB(x, y, cor.getRGB());
+            }
+        }
+        Arrays.sort(pixels);
+        System.out.println(Arrays.toString(pixels));
         return img1;
     }
 }
