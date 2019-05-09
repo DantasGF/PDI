@@ -24,7 +24,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class Imagem {
     
     private double[][][] yiqMatriz;
-    private double[][][] rgbMatriz;
     
     public Imagem(){
         
@@ -439,32 +438,42 @@ public class Imagem {
     public BufferedImage modaSuavizacao(BufferedImage img, int tamJanela){
         BufferedImage img1 = new BufferedImage(img.getWidth(),
                 img.getHeight(), 1);
-        img = grayscaleMedia(img);
-        int area = (tamJanela / 2);
         
         int[] pixels = new int[tamJanela * tamJanela];
         
-        
+        img = grayscaleMedia(img);
+        int area = (tamJanela / 2);
+        int moda = 0;
+        int repete = 1;
+        int compara = 0;
         for(int x = area; x < img.getWidth() - area; x++){
             for(int y = area; y < img.getHeight() - area; y++){
                 int i = 0;
+                int j = 0;
                 for(int x1 = x - area; x1 <= x + area; x1++){
                     for(int y1 = y - area; y1 <= y + area; y1++){
-                        int moda = 0;
                         if(i < pixels.length){
                             pixels[i] = new Color(img.getRGB(x1, y1)).getRed();
+                            j = i + 1;
                             i++;
-                            
+                            if(j < pixels.length){
+                                if(pixels[i] == pixels[j]){
+                                    ++repete;
+                                }
+                                if(repete > compara){
+                                    moda = pixels[i];
+                                    compara = repete;
+                                }
+                            }
+                            j++;
                         }
                     }
                 }
-//                media = (int) (media / (Math.pow(tamJanela, 2)));
-//                Color cor = new Color(media, media, media);
-//                img1.setRGB(x, y, cor.getRGB());
+                Arrays.sort(pixels);
+                Color cor = new Color(moda, moda, moda);
+                img1.setRGB(x, y, cor.getRGB());
             }
         }
-        Arrays.sort(pixels);
-        System.out.println(Arrays.toString(pixels));
         return img1;
     }
 }
