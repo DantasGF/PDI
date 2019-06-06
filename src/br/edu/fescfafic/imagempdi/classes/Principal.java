@@ -68,6 +68,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem11 = new javax.swing.JMenuItem();
         limiar = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
 
         jMenuItem9.setText("jMenuItem9");
 
@@ -284,6 +285,14 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem4);
 
+        jMenuItem13.setText("Histogram");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem13);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -467,13 +476,20 @@ public class Principal extends javax.swing.JFrame {
         exibirImagem(buffer, img);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        new GraficoSemExpansao().grafico(img);
+        BufferedImage buffer = new Imagem().expansao(img, new Imagem().histogram(img));
+        exibirImagem(buffer, new Imagem().grayscaleMedia(img));
+        new GraficoExpandido().graficoExpandido(buffer);
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
     private void exibirImagem(){
         img = new Imagem().abrirImagem(img);
         
         ImageIcon i = new ImageIcon(img);
         jLabel1.setIcon(i);
         jLabel1.setText("");
-        jLabel4.setText("");
+        jLabel4.setText("Aguardando alguma aplicação!");
         
         jLabel2.setText("Quantidade de pixels: " 
                 + new Imagem().quantidadePixels(img));
@@ -539,6 +555,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

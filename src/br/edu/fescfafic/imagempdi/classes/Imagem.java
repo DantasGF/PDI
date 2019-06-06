@@ -16,7 +16,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 /**
  *
  * @author Gutemberg
@@ -472,6 +476,111 @@ public class Imagem {
                 Arrays.sort(pixels);
                 Color cor = new Color(moda, moda, moda);
                 img1.setRGB(x, y, cor.getRGB());
+            }
+        }
+        return img1;
+    }
+    
+    public BufferedImage convolucao(BufferedImage img, int tamJanela, int[] matriz){
+        BufferedImage img1 = new BufferedImage(img.getWidth(),
+                img.getHeight(), 1);
+        img = grayscaleMedia(img);
+        int area = (tamJanela / 2);
+        int[] novaMatriz = new int[matriz.length];
+        for(int x = area; x < img.getWidth() - area; x++){
+            for(int y = area; y < img.getHeight() - area; y++){
+                int media = 0;
+                int contador = 0;
+                int valorAlvo = 0;
+                int resultado = 0;
+                for(int x1 = x - area; x1 <= x + area; x1++){
+                    for(int y1 = y - area; y1 <= y + area; y1++){
+                        if(contador < matriz.length){
+                            int cor = new Color(img.getRGB(x1, y1)).getRed();
+                            resultado = matriz[contador] * cor;
+                            if(resultado > 255){
+                                resultado = 255;
+                            }
+                            novaMatriz[contador] = resultado;
+                            //System.out.print(novaMatriz[contador] + " ");
+                            contador++;
+                        }
+                    }
+                }
+                //contador = 0;
+                for(int a = 0; a < novaMatriz.length; a++){
+                    valorAlvo += novaMatriz[a];
+                }
+                //System.out.println("Valor alvo: " + valorAlvo / 9);
+                //System.out.println();
+                media = valorAlvo / 9;
+                Color cor = new Color(media, media, media);
+                img1.setRGB(x, y, cor.getRGB());
+            }
+        }
+        return img1;
+    }
+    
+    public double[] histogram(BufferedImage img){
+        img = grayscaleMedia(img);
+        
+        double[] pixels = new double[256];
+        
+        for(int i = 0; i < 256; i++){
+            pixels[i] = 0;
+        }
+        
+        for(int x = 0; x < img.getWidth(); x++){
+            for(int y = 0; y < img.getHeight(); y++){
+                int cor = new Color(img.getRGB(x, y)).getRed();
+                pixels[cor] += 1;
+            }
+        }
+        
+        for(int z = 0; z < 256; z++){
+            pixels[z] = pixels[z] / (img.getWidth() * img.getHeight());
+        }
+        
+        return pixels;
+    }
+    
+    public BufferedImage expansao(BufferedImage img, double[] histogram){
+        BufferedImage img1 = new BufferedImage(img.getWidth(),
+                img.getHeight(), 1);
+        
+        int auxMaior = 0;
+        while(histogram[auxMaior] == 0){
+            auxMaior++;
+        }
+        
+        int auxMenor = 255;
+        while(histogram[auxMenor] == 0){
+            auxMenor--;
+        }
+        
+        for(int x = 0; x < img.getWidth(); x++){
+            for(int y = 0; y < img.getHeight(); y++){
+                
+                int red = new Color(img.getRGB(x, y)).getRed();
+                
+                int numerador = red - auxMaior;
+                int denominador = auxMenor - auxMaior;
+                
+                double constraste = (double) numerador / (double) denominador;
+                
+                double valor = constraste * 255;
+                
+                int valorExpandido = (int) valor;
+                
+                if(valorExpandido > 255){
+                    valorExpandido = 255;
+                }
+                
+                if(valorExpandido < 0){
+                    valorExpandido = 0;
+                }
+                
+                img1.setRGB(x, y, new Color(valorExpandido, valorExpandido, valorExpandido).getRGB());
             }
         }
         return img1;
